@@ -1,0 +1,4 @@
+type Log @model @auth(rules: [{ allow: owner, operations: [create, read] }]) {
+  mensagem: String!
+  data: Date!
+}

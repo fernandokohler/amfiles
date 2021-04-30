@@ -1,0 +1,11 @@
+{
+  "AppSyncApiName": "amfiles",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authamfilesa7b0f2f2",
+      "Outputs.UserPoolId"
+    ]
+  }
+}

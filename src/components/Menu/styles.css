@@ -1,0 +1,15 @@
+.fz-14 {
+  font-size: 14px;
+}
+
+.color-secondary {
+  color: #636363;
+}
+
+.card-file {
+  width: 15rem;
+}
+
+.navbar-content {
+  justify-content: space-between !important;
+}
