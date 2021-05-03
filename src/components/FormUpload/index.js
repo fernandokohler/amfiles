@@ -55,7 +55,7 @@ const FormUpload = (props) => {
   return (
     <Form>
       {erro && (
-        <Alert variant="danger" show={erro}>
+        <Alert variant="danger" show={!!erro}>
           {erro.msg}
           <div className="d-flex justify-content-start">
             {erro.keepGoing && (

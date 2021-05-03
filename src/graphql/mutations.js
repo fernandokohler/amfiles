@@ -1,48 +1,58 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createTodo = /* GraphQL */ `
-  mutation CreateTodo(
-    $input: CreateTodoInput!
-    $condition: ModelTodoConditionInput
+export const sendActionHistoryEmail = /* GraphQL */ `
+  mutation SendActionHistoryEmail {
+    sendActionHistoryEmail
+  }
+`;
+export const sendEmailUploadedFile = /* GraphQL */ `
+  mutation SendEmailUploadedFile($filename: String!) {
+    sendEmailUploadedFile(filename: $filename)
+  }
+`;
+export const createLog = /* GraphQL */ `
+  mutation CreateLog(
+    $input: CreateLogInput!
+    $condition: ModelLogConditionInput
   ) {
-    createTodo(input: $input, condition: $condition) {
+    createLog(input: $input, condition: $condition) {
       id
-      name
-      description
+      mensagem
+      data
+      owner
       createdAt
       updatedAt
-      owner
     }
   }
 `;
-export const updateTodo = /* GraphQL */ `
-  mutation UpdateTodo(
-    $input: UpdateTodoInput!
-    $condition: ModelTodoConditionInput
+export const updateLog = /* GraphQL */ `
+  mutation UpdateLog(
+    $input: UpdateLogInput!
+    $condition: ModelLogConditionInput
   ) {
-    updateTodo(input: $input, condition: $condition) {
+    updateLog(input: $input, condition: $condition) {
       id
-      name
-      description
+      mensagem
+      data
+      owner
       createdAt
       updatedAt
-      owner
     }
   }
 `;
-export const deleteTodo = /* GraphQL */ `
-  mutation DeleteTodo(
-    $input: DeleteTodoInput!
-    $condition: ModelTodoConditionInput
+export const deleteLog = /* GraphQL */ `
+  mutation DeleteLog(
+    $input: DeleteLogInput!
+    $condition: ModelLogConditionInput
   ) {
-    deleteTodo(input: $input, condition: $condition) {
+    deleteLog(input: $input, condition: $condition) {
       id
-      name
-      description
+      mensagem
+      data
+      owner
       createdAt
       updatedAt
-      owner
     }
   }
 `;

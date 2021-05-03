@@ -39,10 +39,40 @@
     }
   },
   "function": {
-    "S3Triggerae2b0206": {
-      "service": "Lambda",
+    "SendActionHistoryEmail": {
+      "build": true,
       "providerPlugin": "awscloudformation",
-      "build": true
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "amfilesa7b0f2f2",
+          "attributes": [
+            "UserPoolId"
+          ]
+        },
+        {
+          "category": "api",
+          "resourceName": "amfiles",
+          "attributes": [
+            "GraphQLAPIIdOutput"
+          ]
+        }
+      ]
+    },
+    "SendEmailUploadedFile": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "amfilesa7b0f2f2",
+          "attributes": [
+            "UserPoolId"
+          ]
+        }
+      ]
     }
   }
 }

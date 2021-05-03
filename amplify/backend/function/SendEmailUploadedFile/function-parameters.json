@@ -1,0 +1,10 @@
+{
+  "lambdaLayers": [],
+  "permissions": {
+    "auth": {
+      "amfilesa7b0f2f2": [
+        "read"
+      ]
+    }
+  }
+}

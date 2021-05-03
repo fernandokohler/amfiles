@@ -1,14 +1,32 @@
-import { Storage } from "aws-amplify";
+import { Storage, API } from "aws-amplify";
 import AuthService from "./AuthService";
+import * as mutations from "../graphql/mutations";
 
 Storage.configure({ level: "private" });
 
 class StorageService {
   async upload(fileName, file) {
-    return Storage.put(fileName, file, {
-      progressCallback(progress) {
-        console.log(progress);
-      },
+    const checkFileExists = await this.listItensAuthenticatedUser(fileName);
+
+    await Storage.put(fileName, file).then((res) => {
+      API.graphql({
+        query: mutations.createLog,
+        variables: {
+          input: {
+            data: new Date().toISOString(),
+            mensagem: `${
+              checkFileExists.length > 0 ? "Substituição" : "Upload"
+            } do arquivo ${fileName}`,
+          },
+        },
+      });
+
+      API.graphql({
+        query: mutations.sendEmailUploadedFile,
+        variables: {
+          filename: fileName,
+        },
+      });
     });
   }
 
@@ -31,7 +49,17 @@ class StorageService {
   }
 
   async delete(fullName) {
-    return await Storage.remove(fullName);
+    return await Storage.remove(fullName).then(() => {
+      API.graphql({
+        query: mutations.createLog,
+        variables: {
+          input: {
+            data: new Date().toISOString(),
+            mensagem: `Removeu arquivo ${fullName}`,
+          },
+        },
+      });
+    });
   }
 
   downloadBlob(blob, filename) {

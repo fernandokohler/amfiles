@@ -1,4 +1,18 @@
-type Log @model @auth(rules: [{ allow: owner, operations: [create, read] }]) {
+type Log
+  @model
+  @auth(rules: [{ allow: owner, operations: [create, read] }])
+  @key(name: "owner-index", fields: ["owner"], queryField: "logsByOwner") {
   mensagem: String!
-  data: Date!
+  data: AWSDateTime!
+  owner: ID
+}
+
+type Mutation {
+  sendActionHistoryEmail: Boolean
+    @function(name: "SendActionHistoryEmail-${env}")
+    @aws_cognito_user_pools
+
+  sendEmailUploadedFile(filename: String!): Boolean
+    @function(name: "SendEmailUploadedFile-${env}")
+    @aws_cognito_user_pools
 }

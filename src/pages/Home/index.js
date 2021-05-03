@@ -42,7 +42,11 @@ const Home = () => {
           <div className="card-columns">
             {files &&
               files.map((file) => (
-                <CardFile file={file} onDeleteSuccess={() => getFiles()} />
+                <CardFile
+                  key={file.key}
+                  file={file}
+                  onDeleteSuccess={() => getFiles()}
+                />
               ))}
           </div>
         </Col>
