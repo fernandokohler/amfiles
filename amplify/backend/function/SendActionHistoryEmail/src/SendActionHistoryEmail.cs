@@ -26,10 +26,6 @@ namespace SendActionHistoryEmail
         private static AmazonDynamoDBClient _amazonDynamoDBClient = new AmazonDynamoDBClient();
         private static AmazonCognitoIdentityProviderClient _amazonCognitoIdentityProviderClient = new AmazonCognitoIdentityProviderClient();
 
-        static readonly string SenderAddress = "play_bilu@hotmail.com";
-
-        static readonly string Subject = "[AMFiles] Histórico de ações";
-
         public async Task<bool> LambdaHandler(EventInput input, ILambdaContext context)
         {
             context.Logger.LogLine($"Received data: {Newtonsoft.Json.JsonConvert.SerializeObject(input)}");
@@ -90,7 +86,7 @@ namespace SendActionHistoryEmail
             {
                 var sendRequest = new SendEmailRequest
                 {
-                    Source = SenderAddress,
+                    Source = Environment.GetEnvironmentVariable("EMAIL_SENDER_ADDRESS"),
                     Destination = new Destination
                     {
                         ToAddresses =
@@ -98,7 +94,7 @@ namespace SendActionHistoryEmail
                     },
                     Message = new Message
                     {
-                        Subject = new Content(Subject),
+                        Subject = new Content(Environment.GetEnvironmentVariable("EMAIL_SUBJECT")),
                         Body = new Body
                         {
                             Html = new Content
@@ -136,7 +132,7 @@ namespace SendActionHistoryEmail
             return $@"<html>
                     <head></head>
                     <body>
-                        <h3>Histórico de ações realizada por {user.Cognito.Name}:</h3>
+                        <h3>HistÃ³rico de aÃ§Ãµes realizada por {user.Cognito.Name}:</h3>
                         <ul>
                         {string.Join("",logsString)}
                         </li>
@@ -144,12 +140,11 @@ namespace SendActionHistoryEmail
                     </html>";
         }
 
-        private string GenerateTextBody(List<LogDto> logs) => "Histórico de ações\r\n"
-                                        + $"Você realizou um total de {logs.Count()} ações";
+        private string GenerateTextBody(List<LogDto> logs) => "HistÃ³rico de aÃ§Ãµes\r\n"
+                                        + $"VocÃª realizou um total de {logs.Count()} aÃ§Ãµes";
 
         private async Task<UserCognito> GetUserCognito(string username)
         {
-
             var adminGetUserRequest = new AdminGetUserRequest() { UserPoolId = Environment.GetEnvironmentVariable("AUTH_AMFILESA7B0F2F2_USERPOOLID"),Username = username };
             var adminGetUserResult = await _amazonCognitoIdentityProviderClient.AdminGetUserAsync(adminGetUserRequest);
 

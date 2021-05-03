@@ -22,10 +22,6 @@ namespace SendEmailUploadedFile
     public class SendEmailUploadedFile
     {
 
-        static readonly string SenderAddress = "play_bilu@hotmail.com";
-
-        static readonly string Subject = "[AMFiles] Upload de arquivo";
-
         // If you rename this function, you will need to update the invocation shim
         // to match if you intend to test the function with 'amplify mock function'
 #pragma warning disable CS1998
@@ -77,7 +73,7 @@ namespace SendEmailUploadedFile
             {
                 var sendRequest = new SendEmailRequest
                 {
-                    Source = SenderAddress,
+                    Source = Environment.GetEnvironmentVariable("EMAIL_SENDER_ADDRESS"),
                     Destination = new Destination
                     {
                         ToAddresses =
@@ -85,7 +81,7 @@ namespace SendEmailUploadedFile
                     },
                     Message = new Message
                     {
-                        Subject = new Content(Subject),
+                        Subject = new Content(Environment.GetEnvironmentVariable("EMAIL_SUBJECT")),
                         Body = new Body
                         {
                             Html = new Content

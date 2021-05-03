@@ -76,7 +76,9 @@
             },
             "AUTH_AMFILESA7B0F2F2_USERPOOLID": {
               "Ref": "authamfilesa7b0f2f2UserPoolId"
-            }
+            },
+            "EMAIL_SUBJECT": "[AMFiles] Upload de arquivo",
+            "EMAIL_SENDER_ADDRESS": "play_bilu@hotmail.com"
           }
         },
         "Role": {

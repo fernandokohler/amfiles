@@ -109,7 +109,9 @@
             },
             "API_AMFILES_GRAPHQLAPIIDOUTPUT": {
               "Ref": "apiamfilesGraphQLAPIIdOutput"
-            }
+            },
+            "EMAIL_SUBJECT": "[AMFiles] Histórico de ações",
+            "EMAIL_SENDER_ADDRESS": "play_bilu@hotmail.com"
           }
         },
         "Role": {
