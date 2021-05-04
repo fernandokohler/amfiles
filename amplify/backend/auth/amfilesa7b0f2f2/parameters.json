@@ -10,10 +10,10 @@
     "mfaTypes": [
         "SMS Text Message"
     ],
-    "smsAuthenticationMessage": "Your authentication code is {####}",
-    "smsVerificationMessage": "Your verification code is {####}",
-    "emailVerificationSubject": "Your verification code",
-    "emailVerificationMessage": "Your verification code is {####}",
+    "smsAuthenticationMessage": "Seu código de autenticação é {####}",
+    "smsVerificationMessage": "Seu código de verificação é {####}",
+    "emailVerificationSubject": "[AMFiles] Código de verificação",
+    "emailVerificationMessage": "Seu código de verificação é {####}",
     "defaultPasswordPolicy": false,
     "passwordPolicyMinLength": 8,
     "passwordPolicyCharacters": [],
