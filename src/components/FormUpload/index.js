@@ -17,10 +17,9 @@ const FormUpload = (props) => {
       );
       if (checkFileExists.length > 0) {
         setErro({
-          keepGoing: true,
           code: ErrorUploadFileEnum.FileAlreadyExists,
           msg:
-            "Já existe um arquivo com esse mesmo nome, deseja substituir o arquivo ?",
+            "Já existe um arquivo com esse mesmo nome, remova o antigo para continuar",
         });
         return;
       }
@@ -29,8 +28,7 @@ const FormUpload = (props) => {
     } catch (err) {
       console.error("Erro ao fazer upload do arquivo -> ", err.stack);
       setErro({
-        keepGoing: false,
-        code: ErrorUploadFileEnum.FileAlreadyExists,
+        code: ErrorUploadFileEnum.UploadStorageError,
         msg: `Erro inesperado: ${err.message}`,
       });
     }
@@ -58,16 +56,16 @@ const FormUpload = (props) => {
         <Alert variant="danger" show={!!erro}>
           {erro.msg}
           <div className="d-flex justify-content-start">
-            {erro.keepGoing && (
-              <Button
-                variant="outline-primary"
-                size="sm"
-                onClick={() => uploadFile()}
-                disabled={loading}
-              >
-                Continuar
-              </Button>
-            )}
+            <Button
+              variant="outline-secondary"
+              size="sm"
+              onClick={() => {
+                setInputFileKey(Math.random().toString(36));
+                setErro(null);
+              }}
+            >
+              Entendi
+            </Button>
           </div>
         </Alert>
       )}

@@ -51,12 +51,6 @@ const Authenticator = () => {
             placeholder: "",
             required: true,
           },
-          {
-            type: "phone_number",
-            label: "Telefone",
-            placeholder: "",
-            required: false,
-          },
         ]}
       />
     </AmplifyAuthenticator>

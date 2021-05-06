@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SendEmailUploadedFile.Contracts
+namespace S3Trigger.Contracts
 {
     class User
     {

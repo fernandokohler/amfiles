@@ -28,7 +28,17 @@
     "amfiles": {
       "service": "S3",
       "providerPlugin": "awscloudformation",
-      "dependsOn": []
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "S3Trigger",
+          "attributes": [
+            "Name",
+            "Arn",
+            "LambdaExecutionRole"
+          ]
+        }
+      ]
     }
   },
   "hosting": {
@@ -60,7 +70,7 @@
         }
       ]
     },
-    "SendEmailUploadedFile": {
+    "SaveIndentityIdUser": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda",
@@ -70,6 +80,34 @@
           "resourceName": "amfilesa7b0f2f2",
           "attributes": [
             "UserPoolId"
+          ]
+        },
+        {
+          "category": "api",
+          "resourceName": "amfiles",
+          "attributes": [
+            "GraphQLAPIIdOutput"
+          ]
+        }
+      ]
+    },
+    "S3Trigger": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "amfilesa7b0f2f2",
+          "attributes": [
+            "UserPoolId"
+          ]
+        },
+        {
+          "category": "api",
+          "resourceName": "amfiles",
+          "attributes": [
+            "GraphQLAPIIdOutput"
           ]
         }
       ]

@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "auth": {
+      "amfilesa7b0f2f2": [
+        "read"
+      ]
+    },
+    "storage": {
+      "Log:@model(appsync)": [
+        "create",
+        "read"
+      ],
+      "User:@model(appsync)": [
+        "read"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}

@@ -2,5 +2,5 @@
   "pluginId": "amplify-dotnet-function-runtime-provider",
   "functionRuntime": "dotnetcore3.1",
   "useLegacyBuild": false,
-  "defaultEditorFile": "src\\SendEmailUploadedFile.cs"
+  "defaultEditorFile": "src\\S3Trigger.cs"
 }

@@ -1,9 +1,26 @@
 type Log
   @model
-  @auth(rules: [{ allow: owner, operations: [create, read] }])
+  @auth(rules: [{ allow: owner, operations: [read] }])
   @key(name: "owner-index", fields: ["owner"], queryField: "logsByOwner") {
   mensagem: String!
   data: AWSDateTime!
+  owner: ID
+}
+
+type User
+  @model
+  @auth(rules: [{ allow: owner, operations: [read] }])
+  @key(
+    name: "user-identityId-index"
+    fields: ["identityId"]
+    queryField: "usersByIdentityId"
+  )
+  @key(
+    name: "user-owner-index"
+    fields: ["owner"]
+    queryField: "usersByOwner"
+  ) {
+  identityId: String!
   owner: ID
 }
 
@@ -12,7 +29,7 @@ type Mutation {
     @function(name: "SendActionHistoryEmail-${env}")
     @aws_cognito_user_pools
 
-  sendEmailUploadedFile(filename: String!): Boolean
-    @function(name: "SendEmailUploadedFile-${env}")
+  saveIndentityIdUser: Boolean
+    @function(name: "SaveIndentityIdUser-${env}")
     @aws_cognito_user_pools
 }

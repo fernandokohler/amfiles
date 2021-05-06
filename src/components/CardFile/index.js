@@ -29,8 +29,8 @@ const CardFile = (props) => {
                   await StorageService.delete(file.key);
 
                   toast.success("Apagou o arquivo com sucesso!");
-                  props.onDeleteSuccess();
                   setConfirmDelete(false);
+                  await props.onDeleteSuccess();
                 }}
                 variant="link"
                 size="sm"

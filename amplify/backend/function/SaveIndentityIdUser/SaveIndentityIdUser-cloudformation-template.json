@@ -19,6 +19,10 @@
     "authamfilesa7b0f2f2UserPoolId": {
       "Type": "String",
       "Default": "authamfilesa7b0f2f2UserPoolId"
+    },
+    "apiamfilesGraphQLAPIIdOutput": {
+      "Type": "String",
+      "Default": "apiamfilesGraphQLAPIIdOutput"
     }
   },
   "Conditions": {
@@ -47,16 +51,16 @@
             "Ref": "s3Key"
           }
         },
-        "Handler": "SendEmailUploadedFile::SendEmailUploadedFile.SendEmailUploadedFile::LambdaHandler",
+        "Handler": "index.handler",
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "SendEmailUploadedFile",
+            "SaveIndentityIdUser",
             {
               "Fn::Join": [
                 "",
                 [
-                  "SendEmailUploadedFile",
+                  "SaveIndentityIdUser",
                   "-",
                   {
                     "Ref": "env"
@@ -77,8 +81,35 @@
             "AUTH_AMFILESA7B0F2F2_USERPOOLID": {
               "Ref": "authamfilesa7b0f2f2UserPoolId"
             },
-            "EMAIL_SUBJECT": "[AMFiles] Upload de arquivo",
-            "EMAIL_SENDER_ADDRESS": "play_bilu@hotmail.com"
+            "API_AMFILES_GRAPHQLAPIIDOUTPUT": {
+              "Ref": "apiamfilesGraphQLAPIIdOutput"
+            },
+            "API_AMFILES_USERTABLE_NAME": {
+              "Fn::ImportValue": {
+                "Fn::Sub": "${apiamfilesGraphQLAPIIdOutput}:GetAtt:UserTable:Name"
+              }
+            },
+            "API_AMFILES_USERTABLE_ARN": {
+              "Fn::Join": [
+                "",
+                [
+                  "arn:aws:dynamodb:",
+                  {
+                    "Ref": "AWS::Region"
+                  },
+                  ":",
+                  {
+                    "Ref": "AWS::AccountId"
+                  },
+                  ":table/",
+                  {
+                    "Fn::ImportValue": {
+                      "Fn::Sub": "${apiamfilesGraphQLAPIIdOutput}:GetAtt:UserTable:Name"
+                    }
+                  }
+                ]
+              ]
+            }
           }
         },
         "Role": {
@@ -87,7 +118,7 @@
             "Arn"
           ]
         },
-        "Runtime": "dotnetcore3.1",
+        "Runtime": "nodejs14.x",
         "Layers": [],
         "Timeout": "25"
       }
@@ -98,12 +129,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "amfilesLambdaRole720103db",
+            "amfilesLambdaRole006328bb",
             {
               "Fn::Join": [
                 "",
                 [
-                  "amfilesLambdaRole720103db",
+                  "amfilesLambdaRole006328bb",
                   "-",
                   {
                     "Ref": "env"
@@ -232,10 +263,64 @@
             {
               "Effect": "Allow",
               "Action": [
-                "ses:SendEmail",
-                "ses:SendRawEmail"
+                "dynamodb:Put*",
+                "dynamodb:Create*",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:Get*",
+                "dynamodb:BatchGetItem",
+                "dynamodb:List*",
+                "dynamodb:Describe*",
+                "dynamodb:Scan",
+                "dynamodb:Query",
+                "dynamodb:Update*",
+                "dynamodb:RestoreTable*",
+                "dynamodb:Delete*"
               ],
-              "Resource": "*"
+              "Resource": [
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:dynamodb:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":table/",
+                      {
+                        "Fn::ImportValue": {
+                          "Fn::Sub": "${apiamfilesGraphQLAPIIdOutput}:GetAtt:UserTable:Name"
+                        }
+                      }
+                    ]
+                  ]
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:dynamodb:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":table/",
+                      {
+                        "Fn::ImportValue": {
+                          "Fn::Sub": "${apiamfilesGraphQLAPIIdOutput}:GetAtt:UserTable:Name"
+                        }
+                      },
+                      "/index/*"
+                    ]
+                  ]
+                }
+              ]
             }
           ]
         }
