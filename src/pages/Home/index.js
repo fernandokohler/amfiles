@@ -4,6 +4,7 @@ import StorageService from "../../services/StorageService";
 import FormUpload from "../../components/FormUpload";
 import CardFile from "../../components/CardFile";
 import ReactLoading from "react-loading";
+import "./styles.css";
 
 const Home = () => {
   const [files, setFiles] = useState([]);
