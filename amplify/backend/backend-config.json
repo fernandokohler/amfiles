@@ -79,7 +79,8 @@
           "category": "auth",
           "resourceName": "amfilesa7b0f2f2",
           "attributes": [
-            "UserPoolId"
+            "UserPoolId",
+            "IdentityPoolId"
           ]
         },
         {

@@ -24,7 +24,7 @@ const getId = async (jwtToken, issuer) => {
   const [error, result] = await to(
     identity
       .getId({
-        IdentityPoolId: "us-east-1:e8c443f5-5272-4f6d-9879-b821b5fcdbe0",
+        IdentityPoolId: "us-east-1:2f9bb403-5424-4254-87fe-275b8223c320",
         Logins: { [issuer.replace("https://", "")]: jwtToken },
       })
       .promise()
@@ -87,6 +87,8 @@ const addUser = (owner, identityId) => {
 };
 
 exports.handler = async (event) => {
+  console.log("ENV", JSON.stringify(process.env, null, 2));
+
   try {
     const checkUser = await checkExistId(event.identity.username);
 
